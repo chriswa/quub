@@ -1,0 +1,14 @@
+{
+	"short_name": "isogame",
+	"name": "Isometric Game Prototype",
+	"icons": [
+		{
+			"src": "/assets/appicon.png",
+			"type": "image/png",
+			"sizes": "128x128"
+		}
+	],
+	"background_color": "#4C7FCC",
+	"display": "fullscreen",
+	"orientation": "landscape"
+}

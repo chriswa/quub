@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Quub Example</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css"> -->
+
+			<!-- compel user to use their mobile device fullscreen and landscape -->
+
+	<script src="lib/twgl-full@3.8.0.js"></script>
+	<script src="src/quub/quub-globals.js"></script> <!-- requires twgl -->
+	<script src="lib/pleaseFullscreen.js"></script>
+
+	<!-- <script src="lib/lodash@4.17.4.js"></script> -->
+	<!-- <script src="lib/noisejs@2.1.0.js"></script> -->
+	<!-- <script src="lib/vue-dev@2.5.16.js"></script> -->
+	<!-- <script src="lib/eventemitter3@3.1.0.min.js"></script> -->
+
+	<script type="module" src="src/main.js"></script>
+	<script nomodule>
+		alert('Sorry!\n\nYour browser does not support <script type="module">.\n\nTry Chrome?')
+		throw new Error('Your browser does not support <script type="module">')
+	</script>
+</head>
+<body></body>
+</html>

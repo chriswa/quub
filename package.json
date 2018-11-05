@@ -1,0 +1,14 @@
+{
+  "name": "pyra",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "dev": "nodemon --experimental-modules --loader ./mjs-loader.mjs -r ./src/server/_init.js src/server/server.js"
+  },
+  "author": "",
+  "license": "UNLICENSED"
+}
