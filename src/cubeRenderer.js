@@ -49,13 +49,13 @@ quub.glReady(() => {
 	})
 })
 
-export const worldTransform = new quub.Transform(0, 0, -5) // 5 units in front of the origin (so the camera can see it)
+export const transform = new quub.Transform()
 
 const worldViewProjectionMatrix = m4.identity()
 
 export function render() {
 	// calculate our vertex shader's uniform matrix from the Transforms of the camera and our "world" transform
-	quub.camera.calcWorldViewProjectionMatrix(worldTransform, worldViewProjectionMatrix)
+	quub.camera.calcWorldViewProjectionMatrix(transform, worldViewProjectionMatrix)
 	
 	gl.useProgram(programInfo.program)
 	const uniforms = {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -7,16 +7,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css"> -->
 
-			<!-- compel user to use their mobile device fullscreen and landscape -->
+	<script src="lib/twgl-full@3.8.0.js"></script><!-- thin webgl wrapper to reduce gl calls -->
+	<script src="src/quub/quub-globals.js"></script><!-- webgl game lib (requires twgl) -->
+	<script src="lib/pleaseFullscreen.js"></script><!-- compel user to use their mobile device fullscreen and landscape -->
 
-	<script src="lib/twgl-full@3.8.0.js"></script>
-	<script src="src/quub/quub-globals.js"></script> <!-- requires twgl -->
-	<script src="lib/pleaseFullscreen.js"></script>
-
-	<!-- <script src="lib/lodash@4.17.4.js"></script> -->
-	<!-- <script src="lib/noisejs@2.1.0.js"></script> -->
-	<!-- <script src="lib/vue-dev@2.5.16.js"></script> -->
-	<!-- <script src="lib/eventemitter3@3.1.0.min.js"></script> -->
+	<!-- <script src="lib/lodash@4.17.4.js"></script> --><!-- functional container lib -->
+	<!-- <script src="lib/noisejs@2.1.0.js"></script> --><!-- random values -->
+	<!-- <script src="lib/vue-dev@2.5.16.js"></script> --><!-- easy reactive ui -->
+	<!-- <script src="lib/eventemitter3@3.1.0.min.js"></script> --><!-- events for domless objects -->
 
 	<script type="module" src="src/main.js"></script>
 	<script nomodule>

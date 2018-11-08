@@ -1,4 +1,5 @@
 import * as quub from './quub/index.js'
+import * as backgroundRenderer from './screenRenderer.js'
 import * as cubeRenderer from './cubeRenderer.js'
 
 // initialize mobile support library
@@ -16,12 +17,19 @@ quub.mouselook.init()
 // init freemove, which uses WASD/space/shift keys to translate the camera
 quub.freemove.init()
 
+// move camera back a bit, so we can see the cube, which will be rendered at 0,0,0
+v3.set(quub.camera.transform.pos, 0, 0, 5)
+
+let elapsedTime = 0
+
 // start game loop, which uses requestAnimationFrame
 quub.startGameLoop({
 	update(dt) {
+		elapsedTime += dt
+
 		// spin the cube
-		cubeRenderer.worldTransform.rot[0] += dt / 1000
-		cubeRenderer.worldTransform.rot[1] += dt / 2345
+		cubeRenderer.transform.rot[0] += dt / 1000
+		cubeRenderer.transform.rot[1] += dt / 2345
 
 		// update camera translation (WASD/space/shift)
 		quub.freemove.update(dt)
@@ -33,6 +41,7 @@ quub.startGameLoop({
 		// calculate the viewProjectionMatrix, which we will use to render all
 		quub.camera.updateViewProjectionMatrix()
 
+		backgroundRenderer.render(elapsedTime)
 		cubeRenderer.render()
 	}
 })
