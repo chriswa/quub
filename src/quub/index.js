@@ -12,3 +12,6 @@ export { freemove }
 
 import * as camera from './camera.js'
 export { camera }
+
+import { dt, tt } from './timing.js'
+export { dt, tt }

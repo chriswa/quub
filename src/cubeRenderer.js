@@ -40,7 +40,7 @@ quub.glReady(() => {
 	bufferInfo = twgl.createBufferInfoFromArrays(gl, arrays)
 
 	texture = twgl.createTexture(gl, {
-		src: 'https://i.imgur.com/3XOYbQs.jpg', // 512x512 nebula
+		src: 'nebula.jpg', // 512x512 nebula
 		//mag: gl.NEAREST,
 		//min: gl.NEAREST,
 		//level: 0,

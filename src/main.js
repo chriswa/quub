@@ -14,25 +14,22 @@ quub.createCanvasAndInitGL()
 // init mouselook, which uses pointerlock to rotate the camera
 quub.mouselook.init()
 
-// init freemove, which uses WASD/space/shift keys to translate the camera
+// init freemove, which uses WASD/space/X keys to translate the camera
 quub.freemove.init()
 
 // move camera back a bit, so we can see the cube, which will be rendered at 0,0,0
 v3.set(quub.camera.transform.pos, 0, 0, 5)
 
-let elapsedTime = 0
-
 // start game loop, which uses requestAnimationFrame
 quub.startGameLoop({
-	update(dt) {
-		elapsedTime += dt
+	update() {
 
 		// spin the cube
-		cubeRenderer.transform.rot[0] += dt / 1000
-		cubeRenderer.transform.rot[1] += dt / 2345
+		cubeRenderer.transform.rot[0] += quub.dt / 1000
+		cubeRenderer.transform.rot[1] += quub.dt / 2345
 
-		// update camera translation (WASD/space/shift)
-		quub.freemove.update(dt)
+		// update camera translation (WASD/space/X)
+		quub.freemove.update()
 	},
 	render() {
 		// clear the canvas to dark blue, also fixes the resolution if necessary
@@ -41,7 +38,7 @@ quub.startGameLoop({
 		// calculate the viewProjectionMatrix, which we will use to render all
 		quub.camera.updateViewProjectionMatrix()
 
-		backgroundRenderer.render(elapsedTime)
+		backgroundRenderer.render()
 		cubeRenderer.render()
 	}
 })

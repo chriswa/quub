@@ -49,10 +49,10 @@ quub.glReady(() => {
 	bufferInfo = twgl.createBufferInfoFromArrays(gl, arrays)
 })
 
-export function render(time) {
+export function render() {
 	gl.useProgram(programInfo.program)
 	const uniforms = {
-		u_time: time
+		u_time: quub.tt
 	}
 	twgl.setUniforms(programInfo, uniforms)
 	twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo)

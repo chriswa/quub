@@ -1,4 +1,5 @@
 import * as camera from './camera.js'
+import { dt } from './timing.js'
 
 let moveSpeed
 
@@ -22,10 +23,11 @@ const keyCodes = {
 	'left':     65, // a
 	'right':    68, // d
 	'up':       32, // space
-	'down':     16, // shift
+	//'down':     16, // shift
+	'down':     88, // x
 }
 
-export function update(dt) {
+export function update() {
 
 	m4.identity(playerRotationMatrix)
 	m4.rotateY(playerRotationMatrix, camera.transform.rot[0], playerRotationMatrix)

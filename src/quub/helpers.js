@@ -1,4 +1,5 @@
 import { setGlToReadyState } from './ready.js'
+import * as timing from './timing.js'
 
 export function createCanvasAndInitGL() {
 	document.body.style.margin = '0'
@@ -38,9 +39,9 @@ export function startGameLoop({ update, render }) {
 	let lastTime = performance.now()
 	function mainLoop() {
 		const now = performance.now()
-		const dt = now - lastTime
+		timing.setDTAndIncrementTT(now - lastTime)
 		lastTime = now
-		update(dt)
+		update()
 		render()
 		requestAnimationFrame(mainLoop)
 	}
