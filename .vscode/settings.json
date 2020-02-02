@@ -1,5 +1,10 @@
 {
   "search.exclude": {
     "lib/**/*": true
+  },
+  "workbench.colorCustomizations": {
+    // "statusBar.background": "#ff0000"
+    "titleBar.activeBackground": "#3e1466",
+    "titleBar.inactiveBackground": "#3e1466"
   }
 }
