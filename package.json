@@ -1,17 +1,29 @@
 {
-  "name": "pyra",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
+  "name": "quub",
+  "version": "0.0.1",
+  "description": "Minimalist WebGL Framework",
+  "main": "lib/",
   "scripts": {
-    "dev": "node_modules/http-server/bin/http-server"
+    "lint": "eslint --ext .js,.ts --ignore-path .gitignore src/",
+    "lint-fix": "eslint --ext .js,.ts --ignore-path .gitignore src/ --fix",
+    "build": "tsc && tscpaths -p tsconfig.json -s ./src -o ./lib"
   },
   "author": "",
   "license": "UNLICENSED",
   "dependencies": {
-    "http-server": "^0.11.1"
+    "eventemitter3": "^4.0.0",
+    "twgl.js": "^4.14.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.17.0",
+    "@typescript-eslint/parser": "^2.17.0",
+    "eslint": "^6.8.0",
+    "eslint-config-eslint": "^5.0.1",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^10.0.0",
+    "np": "^5.2.1",
+    "tscpaths": "0.0.9",
+    "typescript": "^3.7.5"
   }
 }

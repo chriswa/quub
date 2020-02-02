@@ -1,3 +1,5 @@
 {
-	"workbench.colorTheme": "Visual Studio Dark"
+  "search.exclude": {
+    "lib/**/*": true
+  }
 }
