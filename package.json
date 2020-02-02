@@ -7,7 +7,7 @@
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore src/",
     "lint-fix": "eslint --ext .js,.ts --ignore-path .gitignore src/ --fix",
     "build": "tsc && tscpaths -p tsconfig.json -s ./src -o ./lib",
-    "publish": "np"
+    "release": "np"
   },
   "author": "",
   "license": "UNLICENSED",
