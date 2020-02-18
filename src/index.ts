@@ -7,10 +7,10 @@ const glOptions = {
   antialias: false,
 }
 
-function initCanvas() {
-  const el = document.getElementById('canvas')
+function initCanvas(suppliedCanvas?: HTMLCanvasElement) {
+  const el = suppliedCanvas !== undefined ? suppliedCanvas : document.getElementById('canvas')
   if (el === null || !(el instanceof HTMLCanvasElement)) {
-    throw new Error('gfx could not init canvas')
+    throw new Error('quub could not init canvas. create a canvas tag with id="canvas" or pass a `canvas` option')
   }
   return el
 }
@@ -18,7 +18,7 @@ function initCanvas() {
 function initContext(canvas_: HTMLCanvasElement, glOptions_: unknown) {
   const ctx = canvas_.getContext('webgl2', glOptions_)
   if (ctx === null || !(ctx instanceof WebGL2RenderingContext)) {
-    throw new Error('gfx could not init webgl2')
+    throw new Error('quub could not init webgl2')
   }
   return ctx
 }
@@ -31,9 +31,15 @@ let _glProxy: WebGL2RenderingContext | undefined = undefined
 type ReadyCallback = (gl: WebGL2RenderingContext) => void
 const pendingReadyCallbacks: Array<ReadyCallback> = []
 
-export default new class GfxClass {
+interface IQuubOptions {
+  canvas?: HTMLCanvasElement
+  productionMode?: boolean
+  loggingEnabled?: boolean
+}
 
-  loggingAllowed = false
+export default new class QuubClass {
+
+  productionMode = false
   loggingEnabled = false
   constants = glConstants
   AttribsBuilder = AttribsBuilder
@@ -53,27 +59,30 @@ export default new class GfxClass {
   }
 
   setLogging(enabled: boolean) {
-    if (enabled && !this.loggingAllowed) { throw new Error('cannot enable logging because gfx.init was not called with loggingAllowed') }
+    if (enabled && this.productionMode) { throw new Error('cannot enable logging because quub.init was called with productionMode') }
     this.loggingEnabled = enabled
     _gl = enabled ? _glProxy : _glRaw
   }
 
-  init(loggingAllowed_: boolean, loggingEnabled_: boolean) {
-    _canvas = initCanvas()
+  init(options: IQuubOptions) {
+
+    this.productionMode = options.productionMode === true
+    this.loggingEnabled = options.loggingEnabled === true
+
+    _canvas = initCanvas(options.canvas)
     _glRaw = initContext(_canvas, glOptions)
 
     this._mouse = new MouseManager(_canvas)
-    
+
     _glProxy = traceMethodCalls(_glRaw, (methodName: string | number | symbol, args: Array<unknown>) => {
       if (this.loggingEnabled) {
         console.log(`gl.${methodName.toString()}`, args)
       }
     })
 
-    this.loggingAllowed = loggingAllowed_
-    _gl = loggingAllowed_ ? _glProxy : _glRaw
+    _gl = this.productionMode ? _glRaw : _glProxy
 
-    this.setLogging(loggingEnabled_)
+    this.setLogging(this.loggingEnabled)
 
     _gl.enable(_gl.CULL_FACE)
     _gl.enable(_gl.DEPTH_TEST)
