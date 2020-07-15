@@ -1,7 +1,6 @@
 import * as twgl from 'twgl.js'
-import gfx from '~/.'
+import { quub } from '~/.'
 import * as quadIndices from '~/quadIndices'
-import * as camera from '~/camera'
 import BasicSpriteGroup from './BasicSpriteGroup'
 import BasicSprite from './BasicSprite'
 
@@ -19,11 +18,11 @@ type TypedArrayForTypedArrayConstructor<T extends TypedArrayConstructor> =
                   T extends Float64ArrayConstructor ? Float64Array :
                     never
 
-const attribs = new gfx.AttribsBuilder([
-  { name: 'a_pos', numComponents: 2, type: gfx.constants.INT },
-  { name: 'a_size', numComponents: 2, type: gfx.constants.UNSIGNED_SHORT },
-  { name: 'a_uv', numComponents: 2, type: gfx.constants.UNSIGNED_SHORT },
-  { name: 'a_rotation', numComponents: 1, type: gfx.constants.FLOAT },
+const attribs = new quub.AttribsBuilder([
+  { name: 'a_pos', numComponents: 2, type: quub.constants.INT },
+  { name: 'a_size', numComponents: 2, type: quub.constants.UNSIGNED_SHORT },
+  { name: 'a_uv', numComponents: 2, type: quub.constants.UNSIGNED_SHORT },
+  { name: 'a_rotation', numComponents: 1, type: quub.constants.FLOAT },
 ])
 
 const shaderAttributeOrder = [ ...attribs.orderedNames, 'a_firefoxShim' ]
@@ -88,7 +87,7 @@ const fragmentShaderSource = /* glsl */`
 
 export let programInfo: twgl.ProgramInfo | undefined = undefined
 
-gfx.onReady((gl) => {
+quub.onReady((gl) => {
   programInfo = twgl.createProgramInfo(gl, [ vertexShaderSource, fragmentShaderSource ], shaderAttributeOrder)
 })
 
@@ -113,7 +112,7 @@ export class BasicSpriteGroupInternals {
   private vaoInfo: twgl.VertexArrayInfo
   
   constructor(textureSrc: string, textureWidth_: number, textureHeight_: number, maxQuads_: number) {
-    gfx.createBasicTexture(textureSrc, (texture) => {
+    quub.createBasicTexture(textureSrc, (texture) => {
       this.texture = texture
     })
     this.textureWidth = textureWidth_
@@ -122,7 +121,7 @@ export class BasicSpriteGroupInternals {
 
     const arrayBuffer = new ArrayBuffer(this.maxQuads * bytesPerQuad)
     this.instanceArray = new Int32Array(arrayBuffer)
-    this.glBuffer = twgl.createBufferFromTypedArray(gfx.gl, this.instanceArray, gfx.gl.ARRAY_BUFFER, gfx.gl.DYNAMIC_DRAW)
+    this.glBuffer = twgl.createBufferFromTypedArray(quub.gl, this.instanceArray, quub.gl.ARRAY_BUFFER, quub.gl.DYNAMIC_DRAW)
     this.vaoInfo = createVao(this.maxQuads, this.glBuffer)
   }
 
@@ -133,16 +132,16 @@ export class BasicSpriteGroupInternals {
   }
 
   buffer() {
-    gfx.gl.bindBuffer(gfx.gl.ARRAY_BUFFER, this.glBuffer)
-    gfx.gl.bufferSubData(gfx.gl.ARRAY_BUFFER, 0, this.instanceArray)
+    quub.gl.bindBuffer(quub.gl.ARRAY_BUFFER, this.glBuffer)
+    quub.gl.bufferSubData(quub.gl.ARRAY_BUFFER, 0, this.instanceArray)
   }
   
   render(quadCount: number) {
     this.buffer() // TODO: BasicSpriteGroup should be responsible for buffering/subbuffering
     
     twgl.setUniforms(programInfo!, { u_texture: this.texture, u_textureSize: [ this.textureWidth, this.textureHeight ]})
-    twgl.setBuffersAndAttributes(gfx.gl, programInfo!, this.vaoInfo)
-    twgl.drawBufferInfo(gfx.gl, this.vaoInfo, gfx.gl.TRIANGLES, 6, 0, quadCount)
+    twgl.setBuffersAndAttributes(quub.gl, programInfo!, this.vaoInfo)
+    twgl.drawBufferInfo(quub.gl, this.vaoInfo, quub.gl.TRIANGLES, 6, 0, quadCount)
   }
 }
 
@@ -170,16 +169,16 @@ export class BasicSpriteInternals {
 
 export function render(simpleSpriteGroups: Array< BasicSpriteGroup >) {
 
-  gfx.gl.useProgram(programInfo!.program)
+  quub.gl.useProgram(programInfo!.program)
 
-  gfx.gl.enable(gfx.gl.BLEND)
-  gfx.gl.blendFunc(gfx.gl.SRC_ALPHA, gfx.gl.ONE_MINUS_SRC_ALPHA)
+  quub.gl.enable(quub.gl.BLEND)
+  quub.gl.blendFunc(quub.gl.SRC_ALPHA, quub.gl.ONE_MINUS_SRC_ALPHA)
 
-  twgl.setUniforms(programInfo!, { u_worldViewProjection: camera.viewProjectionMatrix })
+  twgl.setUniforms(programInfo!, { u_worldViewProjection: quub.camera.viewProjectionMatrix })
   
   simpleSpriteGroups.forEach((simpleSpriteGroup) => {
     simpleSpriteGroup.internals.render(simpleSpriteGroup.quadCount)
   })
   
-  gfx.gl.bindVertexArray(null)
+  quub.gl.bindVertexArray(null)
 }

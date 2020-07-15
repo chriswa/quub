@@ -6,8 +6,9 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore src/",
     "lint-fix": "eslint --ext .js,.ts --ignore-path .gitignore src/ --fix",
-    "build": "tsc && tscpaths -p tsconfig.json -s ./src -o ./lib",
-    "dev": "tsc-watch --onSuccess \"tscpaths -p tsconfig.json -s ./src -o ./lib\"",
+    "build": "tsc && tscpaths -p tsconfig.json -s ./src/main -o ./lib",
+    "dev": "tsc-watch --onSuccess \"tscpaths -p tsconfig.json -s ./src/main -o ./lib\"",
+    "build-demo": "tsc && tscpaths -p tsconfig.json -s ./src/demo -o ./build/demo",
     "release": "np"
   },
   "author": "",

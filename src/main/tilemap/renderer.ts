@@ -1,8 +1,7 @@
 import TileSet from './TileSet'
 import * as twgl from 'twgl.js'
-import gfx from '~/.'
+import { quub } from '~/.'
 import * as quadIndices from '~/quadIndices'
-import * as camera from '~/camera'
 import * as v3 from '~/math/v3'
 
 const shaderAttributeOrder = [ 'a_instanceId', 'a_tileIndex', 'a_firefoxShim' ]
@@ -70,12 +69,12 @@ const fragmentShaderSource = /* glsl */`
 
 export let programInfo: twgl.ProgramInfo | undefined = undefined
 
-gfx.onReady((gl) => {
+quub.onReady((gl) => {
   programInfo = twgl.createProgramInfo(gl, [ vertexShaderSource, fragmentShaderSource ], shaderAttributeOrder)
 })
 
 export function createTexture(textureSrc: string, callback: (texture: WebGLTexture) => void) {
-  return gfx.createBasicTexture(textureSrc, callback)
+  return quub.createBasicTexture(textureSrc, callback)
 }
 
 export const elementsPerQuad = quadIndices.elementsPerQuad
@@ -90,26 +89,26 @@ export class TileMapChunkInternals {
   constructor(size_: number) {
     this.size = size_
     this.data = new Uint32Array(this.size * this.size)
-    this.glBuffer = twgl.createBufferFromTypedArray(gfx.gl, this.data, gfx.gl.ARRAY_BUFFER, gfx.gl.DYNAMIC_DRAW)
+    this.glBuffer = twgl.createBufferFromTypedArray(quub.gl, this.data, quub.gl.ARRAY_BUFFER, quub.gl.DYNAMIC_DRAW)
     const stride = Number(Uint32Array.BYTES_PER_ELEMENT) * 1
     // this.vaoInfo = quadIndices.createVertexArrayInfo(programInfo!, this.size * this.size, {
-    //   'a_tileIndex': { buffer: this.glBuffer, numComponents: 1, type: gfx.gl.BYTE, stride, divisor: 1, offset: 0 },
+    //   'a_tileIndex': { buffer: this.glBuffer, numComponents: 1, type: quub.gl.BYTE, stride, divisor: 1, offset: 0 },
     // })
-    this.vaoInfo = twgl.createVertexArrayInfo(gfx.gl, [ programInfo! ], {
+    this.vaoInfo = twgl.createVertexArrayInfo(quub.gl, [ programInfo! ], {
       numElements: this.size * this.size * 1,
       indices: quadIndices.buffer,
       elementType: quadIndices.bufferGlType,
       attribs: {
         'a_instanceId': { buffer: quadIndices.instanceIdBuffer!, numComponents: 1, type: quadIndices.instanceIdBufferGlType, stride: quadIndices.instanceIdStride, divisor: 1, offset: 0 },
-        'a_tileIndex': { buffer: this.glBuffer, numComponents: 1, type: gfx.gl.INT, stride, divisor: 1, offset: 0 },
+        'a_tileIndex': { buffer: this.glBuffer, numComponents: 1, type: quub.gl.INT, stride, divisor: 1, offset: 0 },
         'a_firefoxShim': { buffer: quadIndices.firefoxShimBuffer!, numComponents: 1, type: quadIndices.firefoxShimBufferGlType, stride: 0, divisor: 0, offset: 0 },
       },
     })
   }
 
   buffer() {
-    gfx.gl.bindBuffer(gfx.gl.ARRAY_BUFFER, this.glBuffer)
-    gfx.gl.bufferSubData(gfx.gl.ARRAY_BUFFER, 0, this.data)
+    quub.gl.bindBuffer(quub.gl.ARRAY_BUFFER, this.glBuffer)
+    quub.gl.bufferSubData(quub.gl.ARRAY_BUFFER, 0, this.data)
   }
 
   render(offset: v3.Vec3, pixelSize: number) {
@@ -121,18 +120,18 @@ export class TileMapChunkInternals {
       u_offset: offset,
     })
 
-    twgl.setBuffersAndAttributes(gfx.gl, programInfo!, this.vaoInfo)
+    twgl.setBuffersAndAttributes(quub.gl, programInfo!, this.vaoInfo)
 
-    twgl.drawBufferInfo(gfx.gl, this.vaoInfo, gfx.gl.TRIANGLES, 6, 0, this.size * this.size)
-    // gfx.gl.drawElementsInstanced(gfx.gl.TRIANGLES, 6, this.vaoInfo.elementType!, 0, this.size * this.size)
+    twgl.drawBufferInfo(quub.gl, this.vaoInfo, quub.gl.TRIANGLES, 6, 0, this.size * this.size)
+    // quub.gl.drawElementsInstanced(quub.gl.TRIANGLES, 6, this.vaoInfo.elementType!, 0, this.size * this.size)
   }
 }
 
 
 export function renderBegin() {
-  gfx.gl.useProgram(programInfo!.program)
+  quub.gl.useProgram(programInfo!.program)
   twgl.setUniforms(programInfo!, {
-    u_worldViewProjection: camera.viewProjectionMatrix,
+    u_worldViewProjection: quub.camera.viewProjectionMatrix,
   })
 }
 

@@ -1,5 +1,5 @@
 import * as twgl from 'twgl.js'
-import gfx from '~/.'
+import { quub } from '~/.'
 
 export const maxQuads = 10922 // theoretical max is 10922 (e.g. floor(UNSIGNED_SHORT / 6))
 
@@ -20,13 +20,13 @@ for (let quadId = 0; quadId < maxQuads; quadId += 1) {
 export let bufferGlType: GLenum | undefined = undefined
 export let buffer: WebGLBuffer | undefined = undefined
 
-gfx.onReady((gl) => {
+quub.onReady((gl) => {
   bufferGlType = gl.UNSIGNED_SHORT
   buffer = twgl.createBufferFromTypedArray(gl, new Uint16Array(indexList), gl.ELEMENT_ARRAY_BUFFER)
 })
 
 export function createVertexArrayInfo(programInfo: twgl.ProgramInfo, quadCount: number, attribs: Record< string, twgl.AttribInfo >) {
-  return twgl.createVertexArrayInfo(gfx.gl, [ programInfo ], {
+  return twgl.createVertexArrayInfo(quub.gl, [ programInfo ], {
     numElements: quadCount * elementsPerQuad,
     indices: buffer,
     elementType: bufferGlType,
@@ -45,7 +45,7 @@ export let instanceIdBufferGlType: GLenum | undefined = undefined
 export let instanceIdBuffer: WebGLBuffer | undefined = undefined
 export const instanceIdStride = Int32Array.BYTES_PER_ELEMENT
 
-gfx.onReady((gl) => {
+quub.onReady((gl) => {
   instanceIdBufferGlType = gl.INT
   instanceIdBuffer = twgl.createBufferFromTypedArray(gl, instanceIdArray, gl.ARRAY_BUFFER)
 })
@@ -61,7 +61,7 @@ export let firefoxShimBufferGlType: GLenum | undefined = undefined
 export let firefoxShimBuffer: WebGLBuffer | undefined = undefined
 export const firefoxShimStride = Float32Array.BYTES_PER_ELEMENT
 
-gfx.onReady((gl) => {
+quub.onReady((gl) => {
   firefoxShimBufferGlType = gl.FLOAT
   firefoxShimBuffer = twgl.createBufferFromTypedArray(gl, firefoxShimArray, gl.ARRAY_BUFFER)
 })
