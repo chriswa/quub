@@ -3,16 +3,16 @@
     "target": "ES2019",
     "module": "commonjs",
     "declaration": true,
-    "outDir": "./lib",
     "strict": true,
- 
+    "outDir": "./build/main",
+
     "baseUrl": ".",
     "paths": {
       "~/*": [
         "src/main/*"
       ]
     },
-    "lib": ["ES2018", "DOM"],
+    "lib": [ "ES2018", "DOM" ],
 
     "esModuleInterop": true,
     "sourceMap": true,
@@ -25,6 +25,6 @@
     "strictNullChecks": true,
     "experimentalDecorators": true
   },
-  "include": ["src/main"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "include": [ "src" ],
+  "exclude": [ "node_modules", "**/__tests__/*" ]
 }

@@ -1,7 +1,7 @@
 import * as m4 from '~/math/m4'
 import { quub } from '~/.'
 import Transform from '~/math/Transform'
-import ICamera from './ICamera'
+import BaseCamera from './BaseCamera'
 
 const projectionMatrix = m4.identity()
 const viewMatrix = m4.identity()
@@ -9,7 +9,7 @@ const fov = 60 * Math.PI / 180
 const zNear = 0.05
 const zFar = 5000
 
-export default class PerspectiveCamera implements ICamera {
+export default class PerspectiveCamera extends BaseCamera {
 
   viewProjectionMatrix = m4.identity()
 

@@ -1,6 +1,6 @@
 {
   "search.exclude": {
-    "lib/**/*": true
+    "build/**/*": true
   },
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#3e1466",

@@ -2,9 +2,9 @@ import * as m4 from '~/math/m4'
 import * as v3 from '~/math/v3'
 import { quub } from '~/.'
 import Transform from '~/math/Transform'
-import ICamera from './ICamera'
+import BaseCamera from './BaseCamera'
 
-export default class OrthographicCamera implements ICamera {
+export default class OrthographicCamera extends BaseCamera {
   
   zoom = 1
   setZoom(newZoom: number) {

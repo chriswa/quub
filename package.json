@@ -2,13 +2,12 @@
   "name": "quub",
   "version": "0.1.1",
   "description": "Minimalist WebGL Framework",
-  "main": "lib/",
+  "main": "build/main/",
   "scripts": {
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore src/",
     "lint-fix": "eslint --ext .js,.ts --ignore-path .gitignore src/ --fix",
-    "build": "tsc && tscpaths -p tsconfig.json -s ./src/main -o ./lib",
-    "dev": "tsc-watch --onSuccess \"tscpaths -p tsconfig.json -s ./src/main -o ./lib\"",
-    "build-demo": "tsc && tscpaths -p tsconfig.json -s ./src/demo -o ./build/demo",
+    "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src/main -o ./build/main",
+    "watch": "tsc-watch --project tsconfig.json --onSuccess \"tscpaths -p tsconfig.json -s ./src/main -o ./build/main\"",
     "release": "np"
   },
   "author": "",

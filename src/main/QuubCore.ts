@@ -2,7 +2,7 @@ import * as twgl from 'twgl.js'
 import glConstants from './glConstants'
 import AttribsBuilder from './attribsBuilder'
 import MouseManager from './MouseManager'
-import { ICamera } from './camera'
+import { BaseCamera } from './cameras'
 
 const glOptions = {
   antialias: false,
@@ -12,7 +12,7 @@ type ReadyCallback = (gl: WebGL2RenderingContext) => void
 
 interface IQuubOptions {
   canvas?: HTMLCanvasElement // 
-  camera: ICamera
+  camera: BaseCamera
   productionMode?: boolean // in production mode, logging cannot be turned on because no glProxy has been installed
   loggingEnabled?: boolean // start with logging enabled, which will log all GL calls in ReadyCallbacks (not available in productionMode)
 }
@@ -25,7 +25,7 @@ export default class QuubCore {
   private pendingReadyCallbacks: Array<ReadyCallback> = []
   AttribsBuilder = AttribsBuilder
 
-  camera: ICamera
+  camera: BaseCamera
 
   private _canvas: HTMLCanvasElement | undefined = undefined
   private _gl: WebGL2RenderingContext | undefined = undefined

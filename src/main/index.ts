@@ -22,5 +22,5 @@ export { tilemap }
 import * as basicSprites from './basicSprites'
 export { basicSprites }
 
-import * as camera from './camera'
-export { camera }
+import * as cameras from './cameras'
+export { cameras }
